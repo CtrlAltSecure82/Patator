@@ -1,0 +1,25 @@
+{
+    "Token": "",
+
+    "WebhoockThreads": 1500,
+    "SpammerThreads": 250,
+
+    "ProxyScrapeUrls": {
+        "ProxyScrape-Https": "https://api.proxyscrape.com/?request=displayproxies&status=alive&proxytype=https",
+        "ProxyScrape-Http": "https://api.proxyscrape.com/?request=displayproxies&status=alive&proxytype=http",
+        "ProxyScrape-Socks4": "https://api.proxyscrape.com/?request=displayproxies&status=alive&proxytype=socks4",
+        "ProxyScrape-Socks5": "https://api.proxyscrape.com/?request=displayproxies&status=alive&proxytype=socks5",
+        "ProxyScrape-All": "https://api.proxyscrape.com/?request=displayproxies&status=alive&proxytype=all",
+        "TheSpeedX-Socks5": "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks5.txt",
+        "TheSpeedX-Socks4": "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks4.txt",
+        "TheSpeedX-Http": "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt",
+        "ShiftyTR-Http": "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/http.txt",
+        "ShiftyTR-Https": "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/https.txt",
+        "ShiftyTR-All": "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/proxy.txt",
+        "ShiftyTR-Socks4": "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks4.txt",
+        "ShiftyTR-Socks5": "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks5.txt",
+        "Sunny9577-All": "https://raw.githubusercontent.com/sunny9577/proxy-scraper/master/proxies.txt",
+        "Hookzof-All": "https://raw.githubusercontent.com/hookzof/socks5_list/master/proxy.txt",
+        "Clarketm-All": "https://raw.githubusercontent.com/clarketm/proxy-list/master/proxy-list-raw.txt"
+    }
+}
