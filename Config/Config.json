@@ -3,6 +3,7 @@
 
     "WebhoockThreads": 1500,
     "SpammerThreads": 250,
+    "JoinerThreads": 700,
 
     "ProxyScrapeUrls": {
         "ProxyScrape-Https": "https://api.proxyscrape.com/?request=displayproxies&status=alive&proxytype=https",
