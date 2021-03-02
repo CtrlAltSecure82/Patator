@@ -1,0 +1,4 @@
+colorama
+requests
+fake_useragent
+update-check
