@@ -5,6 +5,8 @@
     "SpammerThreads": 250,
     "JoinerThreads": 700,
 
+    "ScrapeProxies": true,
+
     "ProxyScrapeUrls": {
         "ProxyScrape-Https": "https://api.proxyscrape.com/?request=displayproxies&status=alive&proxytype=https",
         "ProxyScrape-Http": "https://api.proxyscrape.com/?request=displayproxies&status=alive&proxytype=http",
