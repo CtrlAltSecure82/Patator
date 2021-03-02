@@ -300,8 +300,8 @@ class Main():
                 self.spammer.start_spammer(self.joiner_threads, Resp, invite_code=discord_invite)
 
 def main():
-    Installer = Update()
-    Installer.Update()
+    #Installer = Update()
+    #Installer.Update()
 
     with open('./Config/Config.json', 'r+') as config_file:
         config = json.load(config_file)
