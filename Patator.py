@@ -299,7 +299,7 @@ class Main():
                 self.console.printer('*', f'Starting joining with discord.gg/{discord_invite} with {self.joiner_threads} thread(s)', color= Fore.MAGENTA)
                 self.spammer.start_spammer(self.joiner_threads, Resp, invite_code=discord_invite)
 
-def Main():
+def main():
     Installer = Update()
     Installer.Update()
 
@@ -311,4 +311,4 @@ def Main():
         Tool.Parser()
 
 if __name__ == '__main__':
-    Main()
+    main()
