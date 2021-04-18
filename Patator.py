@@ -161,13 +161,7 @@ class Spammer():
                 else:
                     self.console.printer('!', f'CloudFare banned with proxy {raw}', ' !', Fore.RED)
 
-            except requests.exceptions.ProxyError:
-                pass
-            except requests.exceptions.ConnectionError:
-                pass
-            except requests.exceptions.InvalidUR:
-                pass
-            except requests.exceptions.Timeout:
+            except:
                 pass
 
     def spam_token(self, channel, message):
@@ -190,13 +184,7 @@ class Spammer():
                 else:
                     self.console.printer('!', f'CloudFare banned with proxy {raw}', ' !', Fore.RED)
 
-            except requests.exceptions.ProxyError:
-                pass
-            except requests.exceptions.ConnectionError:
-                pass
-            except requests.exceptions.InvalidUR:
-                pass
-            except requests.exceptions.Timeout:
+            except:
                 pass
 
     def join_token(self, invite_code):
@@ -223,13 +211,7 @@ class Spammer():
                 else:
                     print('joined')
 
-            except requests.exceptions.ProxyError:
-                pass
-            except requests.exceptions.ConnectionError:
-                pass
-            except requests.exceptions.InvalidUR:
-                pass
-            except requests.exceptions.Timeout:
+            except:
                 pass
 
     def start_spammer(self, threads_number, choice, invite_code = None, channel = None, messsage = '> ||@everyone|| **Get rekt with Patator (https://github.com/Its-Vichy/Patator)**'):
