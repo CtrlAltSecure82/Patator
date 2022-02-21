@@ -21,7 +21,7 @@
 * Powerfull and fast
 
 ## 🔎 Keep updated :c
-* Update tool wen starting
+* Update tool when starting
 
 <h1 align="center">HOW TO SETUP</h1>
 
